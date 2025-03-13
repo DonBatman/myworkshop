@@ -1,0 +1,2 @@
+Adds a work bench and table to Luanti.
+The work bench has storage in it.
