@@ -51,7 +51,8 @@ after_place_node = function(pos, placer)
          right_pos.z = right_pos.z-dir.x/math.abs(dir.x)
       end
       local right_node = minetest.get_node(right_pos)
-	if right_node.name == "air" then
+	if right_node.name == "air" or
+		right_node.name == "default:water_source" then
       minetest.set_node(right_pos, {name="myworkshop:bench_long_right",param2 = minetest.dir_to_facedir(placer:get_look_dir())})
 	end
         local meta = minetest.get_meta(pos)
