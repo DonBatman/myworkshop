@@ -1,7 +1,7 @@
 minetest.register_node("myworkshop:shelf", {
 	description = "Shelf ",
 	tiles = {
-		"myworkshop_wood.png",
+		"myworkshop_grey.png",
 	},
 	drawtype = "nodebox",
 	paramtype = "light",
