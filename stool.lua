@@ -1,7 +1,12 @@
 minetest.register_node("myworkshop:stool", {
 	description = "Stool ",
 	tiles = {
+		"myworkshop_stool_top.png",
 		"myworkshop_wood.png",
+		"myworkshop_stool_side.png",
+		"myworkshop_stool_side.png",
+		"myworkshop_stool_side.png",
+		"myworkshop_stool_side.png",
 	},
 	drawtype = "nodebox",
 	paramtype = "light",
