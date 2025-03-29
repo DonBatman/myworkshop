@@ -7,12 +7,6 @@ function minetest.get_myworkshop_formspec(pos)
     return formspec
 end
 
-local function has_myworkshop_privilege(meta, player)
-    if player:get_player_name() ~= meta:get_string("owner") then
-        return false
-    end
-    return true
-end
 minetest.register_node("myworkshop:bench_long", {
 	description = "Long Bench",
 	inventory_image = "myworkshop_bench_inv.png",
@@ -76,7 +70,7 @@ after_destruct = function(pos)
 	end
 end,
 
-    on_construct = function(pos)
+on_construct = function(pos)
         local meta = minetest.get_meta(pos)
         meta:set_string("infotext", "Work Bench")
         meta:set_string("owner", "")
@@ -99,65 +93,27 @@ end,
         local meta = minetest.get_meta(pos);
         local inv = meta:get_inventory()
 
-        return inv:is_empty("main") and has_myworkshop_privilege(meta, player)
+        return inv:is_empty("main")
 	
 
 
     end,
     allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
         local meta = minetest.get_meta(pos)
-        if not has_myworkshop_privilege(meta, player) then
-            minetest.log("action", player:get_player_name()..
-                    " tried to access a work bench belonging to "..
-                    meta:get_string("owner").." at "..
-                    minetest.pos_to_string(pos))
-            return 0
-        end
         return count
     end,
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
         local meta = minetest.get_meta(pos)
-        if not has_myworkshop_privilege(meta, player) then
-            minetest.log("action", player:get_player_name()..
-                    " tried to access a work bench belonging to "..
-                    meta:get_string("owner").." at "..
-                    minetest.pos_to_string(pos))
-            return 0
-        end
         return stack:get_count()
     end,
-    allow_metadata_inventory_take = function(pos, listname, index, stack, player)
-        local meta = minetest.get_meta(pos)
-        if not has_myworkshop_privilege(meta, player) then
-            minetest.log("action", player:get_player_name()..
-                    " tried to access a work bench belonging to "..
-                    meta:get_string("owner").." at "..
-                    minetest.pos_to_string(pos))
-            return 0
-        end
-        return stack:get_count()
-    end,
-    on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-        minetest.log("action", player:get_player_name()..
-                " moves stuff into work bench at "..minetest.pos_to_string(pos))
-    end,
-    on_metadata_inventory_put = function(pos, listname, index, stack, player)
-        minetest.log("action", player:get_player_name()..
-                " moves stuff into work bench at "..minetest.pos_to_string(pos))
-    end,
-    on_metadata_inventory_take = function(pos, listname, index, stack, player)
-        minetest.log("action", player:get_player_name()..
-                " takes stuff from work bench at "..minetest.pos_to_string(pos))
-    end,
+
     on_rightclick = function(pos, node, clicker)
         local meta = minetest.get_meta(pos)
-        if has_myworkshop_privilege(meta, clicker) then
             minetest.show_formspec(
                 clicker:get_player_name(),
                 "myworkshop:bench_long",
                 minetest.get_myworkshop_formspec(pos)
             )
-        end
     end,
 
 
